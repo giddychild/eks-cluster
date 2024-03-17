@@ -9,11 +9,6 @@ provider "kubernetes" {
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
     command     = "aws"
-    # args = ["eks", "get-token", "--cluster-name", module.eks.cluster_name]
-    args = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.cluster.id]
+    args = ["eks", "get-token", "--cluster-name", module.eks.cluster_id]
   }
-}
-
-data "aws_eks_cluster" "cluster" {
-  name = aws_eks_cluster.eks.id
 }
