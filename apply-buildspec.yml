@@ -16,8 +16,6 @@ phases:
       - chmod +x check-rds-snapshots.sh
       - chmod +x delete-old-snapshots.sh
       - cd ${CODEBUILD_SRC_DIR}/${CODE_SRC_DIR}
-      - export WG_PUBLIC_KEY=$(aws secretsmanager get-secret-value --secret-id wg-public-key --query SecretString --output text | jq -r .WG_PUBLIC_KEY)
-      - export WG_PRIVATE_KEY=$(aws secretsmanager get-secret-value --secret-id wg-private-key --query SecretString --output text | jq -r .WG_PRIVATE_KEY)
       - export KEYCLOAK_USER_PASSWORD=$(aws secretsmanager get-secret-value --secret-id keycloak --query SecretString --output text | jq -r .KEYCLOAK_USER_PASSWORD)
       - cd eks-kubeflow
       - terraform init -reconfigure
@@ -30,7 +28,7 @@ phases:
         if [ $APPLY_EXIT_CODE -ne 0 ]; then
           echo "Terraform apply failed. Running destroy to clean up resources..."
           terraform state rm module.eks.kubernetes_config_map_v1_data.aws_auth || true
-          terraform destroy -auto-approve -var "environment=dev" -var "WG_PUBLIC_KEY=$WG_PUBLIC_KEY" -var "WG_PRIVATE_KEY=$WG_PRIVATE_KEY" -var "KEYCLOAK_USER_PASSWORD=$KEYCLOAK_USER_PASSWORD"
+          terraform destroy -auto-approve -var "environment=dev" -var "KEYCLOAK_USER_PASSWORD=$KEYCLOAK_USER_PASSWORD"
           exit $APPLY_EXIT_CODE # Preserve the original exit code
         fi
         set -e # Re-enable exit on error

@@ -106,12 +106,11 @@ module "eks" {
     }
   }
 
-  # aws-auth configmap
+  create_aws_auth_configmap = true
   manage_aws_auth_configmap = true
 
   aws_auth_roles = [
     {
-      # https://docs.aws.amazon.com/eks/latest/userguide/security_iam_troubleshoot.html#security-iam-troubleshoot-ConfigMap
       rolearn  = "arn:aws:iam::155125294186:role/AWSReservedSSO_AWSAdministratorAccess_62d91dab9b9b6f48"
       username = "arn:aws:sts::155125294186:assumed-role/AWSReservedSSO_AWSAdministratorAccess_62d91dab9b9b6f48/{{SessionName}}"
       groups   = ["system:masters"]
