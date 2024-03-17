@@ -64,7 +64,7 @@ module "postgres-db" {
   port     = "5432"
 
   create_db_subnet_group = true
-  subnet_ids = data.terraform_remote_state.infra_repo.outputs.vpc_private_subnets
+  subnet_ids = data.terraform_remote_state.infrastructure.outputs.vpc_private_subnets
 
   skip_final_snapshot        = false
   final_snapshot_identifier_prefix = "final"
