@@ -6,3 +6,8 @@ output "eks_oidc_provider_url" {
 output "cluster_id" {
   value = module.eks.cluster_id
 }
+
+output "cluster_name" {
+  value = module.eks.cluster_name
+}
+
