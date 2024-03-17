@@ -22,7 +22,7 @@ module "eks" {
   }
 
   vpc_id     = data.terraform_remote_state.infrastructure.outputs.vpc_id
-  subnet_ids = data.terraform_remote_state.infrastructure.outputs.vpc_private_subnets
+  subnet_ids = data.terraform_remote_state.infrastructure.outputs.private_subnet_ids
 
   eks_managed_node_group_defaults = {
     disk_size = local.eks_disk_size_gb
