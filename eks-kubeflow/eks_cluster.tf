@@ -65,27 +65,35 @@ module "eks" {
     Environment = "eks-${var.environment}-kubeflow"
   }
 
-  # cluster_security_group_additional_rules = {
-  #   ingress_wireguard_tcp = {
-  #     description = "Access EKS from WireGuard VPN."
-  #     protocol    = "tcp"
-  #     from_port   = 443
-  #     to_port     = 443
-  #     type        = "ingress"
-  #     # security_groups = [aws_security_group.wireguard_sg.id]
-  #     security_groups = data.terraform_remote_state.infra_repo.outputs.wg_security_group_id
-  #     cidr_blocks     = data.terraform_remote_state.infra_repo.outputs.vpc_public_subnets_cidr_blocks
-  #   }
-  #   ingress_codebuild_https = {
-  #     description = "Access EKS from CodeBuild VPC"
-  #     protocol    = "tcp"
-  #     from_port   = 443
-  #     to_port     = 443
-  #     type        = "ingress"
-  #     # security_groups = ["sg-089b84d39edfcd3c4"] # Security Group ID of CodeBuild VPC
-  #     cidr_blocks = ["172.16.0.0/24"]
-  #   }
-  # }
+  cluster_security_group_additional_rules = {
+    # ingress_wireguard_tcp = {
+    #   description = "Access EKS from WireGuard VPN."
+    #   protocol    = "tcp"
+    #   from_port   = 443
+    #   to_port     = 443
+    #   type        = "ingress"
+    #   # security_groups = [aws_security_group.wireguard_sg.id]
+    #   security_groups = data.terraform_remote_state.infra_repo.outputs.wg_security_group_id
+    #   cidr_blocks     = data.terraform_remote_state.infra_repo.outputs.vpc_public_subnets_cidr_blocks
+    # }
+    ingress = {
+      description           = "To node 1025-65535"
+      type                       = "ingress"
+      from_port             = 0
+      to_port                  = 0
+      protocol                = -1
+      cidr_blocks           = ["10.0.0.0/16"]
+      source_node_security_group = false
+    },
+    ingress_codebuild_https = {
+      description = "EKS Cluster allows 443 port to get API call"
+      protocol    = "tcp"
+      from_port   = 443
+      to_port     = 443
+      type        = "ingress"
+      cidr_blocks = ["10.0.0.0/16"]
+    }
+  }
 
   node_security_group_additional_rules = {
     ingress_15017 = {
