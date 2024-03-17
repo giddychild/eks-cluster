@@ -1,7 +1,7 @@
 # Fetch most recent snapshot of the specified RDS instance if a snapshot ID exist
 data "aws_db_snapshot" "latest" {
   count = data.external.rds_final_snapshot_exists.result["snapshot_id"] != null ? 1 : 0
-  db_instance_identifier = local.postgressql_instance_name
+  db_instance_identifier = srcd-mlops-dev-postgressql-kfp     #local.postgressql_instance_name
   most_recent            = true
 }
 
