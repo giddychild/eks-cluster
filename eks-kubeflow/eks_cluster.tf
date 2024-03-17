@@ -109,10 +109,17 @@ module "eks" {
   create_aws_auth_configmap = true
   manage_aws_auth_configmap = true
 
-  aws_auth_roles = [
+  # aws_auth_roles = [
+  #   {
+  #     rolearn  = "arn:aws:iam::155125294186:role/AWSReservedSSO_AWSAdministratorAccess_62d91dab9b9b6f48"
+  #     username = "arn:aws:sts::155125294186:assumed-role/AWSReservedSSO_AWSAdministratorAccess_62d91dab9b9b6f48/{{SessionName}}"
+  #     groups   = ["system:masters"]
+  #   }
+  # ]
+  aws_auth_users = [
     {
-      rolearn  = "arn:aws:iam::155125294186:role/AWSReservedSSO_AWSAdministratorAccess_62d91dab9b9b6f48"
-      username = "arn:aws:sts::155125294186:assumed-role/AWSReservedSSO_AWSAdministratorAccess_62d91dab9b9b6f48/{{SessionName}}"
+      userarn  = "arn:aws:iam::155125294186:user/admin_seyi"
+      username = "admin_seyi"
       groups   = ["system:masters"]
     }
   ]
