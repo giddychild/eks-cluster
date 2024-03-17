@@ -9,7 +9,7 @@ data "aws_db_snapshot" "latest" {
 data "external" "rds_final_snapshot_exists" {
   program = [
     "${path.module}/../check-rds-snapshots.sh",
-    "srcd-mlops-dev-postgressql-kfp"   #local.postgressql_instance_name
+    local.postgressql_instance_name
   ]
 }
 
