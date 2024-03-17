@@ -29,7 +29,7 @@ module "eks" {
   }
 
   eks_managed_node_groups = {
-    "t3.medium-pool01" = {
+    "t3-medium-pool01" = {
       min_size     = 1
       max_size     = local.eks_max_node_count
       desired_size = 1
@@ -41,7 +41,7 @@ module "eks" {
       instance_types = ["t3.medium"]
       capacity_type  = "ON_DEMAND"
     },
-    "t2.micro-pool01" = {
+    "t2-micro-pool01" = {
       min_size     = 0
       max_size     = local.eks_max_node_count
       desired_size = 0
@@ -82,7 +82,7 @@ module "eks" {
   #     from_port   = 443
   #     to_port     = 443
   #     type        = "ingress"
-  #     # security_groups = ["sg-089b84d39edfcd3c4"] # Security Group ID of CodeBuild VPC `srcd-mlops-aws-codebuild-sg`
+  #     # security_groups = ["sg-089b84d39edfcd3c4"] # Security Group ID of CodeBuild VPC
   #     cidr_blocks = ["172.16.0.0/24"]
   #   }
   # }
@@ -112,16 +112,8 @@ module "eks" {
   aws_auth_roles = [
     {
       # https://docs.aws.amazon.com/eks/latest/userguide/security_iam_troubleshoot.html#security-iam-troubleshoot-ConfigMap
-      # rolearn  = "arn:aws:iam::416188920014:role/aws-reserved/sso.amazonaws.com/ap-southeast-2/AWSReservedSSO_AWSAdministratorAccess_62d91dab9b9b6f48"
-      rolearn  = "arn:aws:iam::416188920014:role/AWSReservedSSO_AWSAdministratorAccess_62d91dab9b9b6f48"
-      username = "arn:aws:sts::416188920014:assumed-role/AWSReservedSSO_AWSAdministratorAccess_62d91dab9b9b6f48/{{SessionName}}"
-      groups   = ["system:masters"]
-    },
-    {
-      # arn:aws:iam::416188920014:role/service-role/srcd-mlops-image-codebuild-service-role
-      # arn:aws:sts::416188920014:assumed-role/srcd-mlops-image-codebuild-service-role/AWSCodeBuild-e124e164-40d4-43ea-b45c-4c807112d787
-      rolearn  = "arn:aws:iam::416188920014:role/srcd-mlops-image-codebuild-service-role"
-      username = "arn:aws:sts::416188920014:assumed-role/srcd-mlops-image-codebuild-service-role/{{SessionName}}"
+      rolearn  = "arn:aws:iam::155125294186:role/AWSReservedSSO_AWSAdministratorAccess_62d91dab9b9b6f48"
+      username = "arn:aws:sts::155125294186:assumed-role/AWSReservedSSO_AWSAdministratorAccess_62d91dab9b9b6f48/{{SessionName}}"
       groups   = ["system:masters"]
     }
   ]
