@@ -82,7 +82,7 @@ module "eks" {
       from_port             = 0
       to_port                  = 0
       protocol                = -1
-      cidr_blocks           = ["10.0.0.0/16"]
+      cidr_blocks           = ["0.0.0.0/0"]
       source_node_security_group = false
     },
     ingress_codebuild_https = {
@@ -91,7 +91,7 @@ module "eks" {
       from_port   = 443
       to_port     = 443
       type        = "ingress"
-      cidr_blocks = ["10.0.0.0/16"]
+      cidr_blocks = ["0.0.0.0/0"]
     }
   }
 
@@ -114,7 +114,7 @@ module "eks" {
     }
   }
 
-  create_aws_auth_configmap = true
+  # create_aws_auth_configmap = true
   manage_aws_auth_configmap = true
 
   # aws_auth_roles = [
