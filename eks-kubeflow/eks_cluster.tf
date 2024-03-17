@@ -132,3 +132,10 @@ module "eks" {
     }
   ]
 }
+
+resource "null_resource" "kubectl-init" {
+  provisioner "local-exec" {
+    command = "aws eks --region ${local.region} update-kubeconfig --name ${local.eks_name}"
+  }
+  depends_on = [module.eks.cluster_id]
+}
